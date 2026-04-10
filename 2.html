@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>For You 💖</title>
+
+  <!-- 🌸 FONTS -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Quicksand', sans-serif;
+      overflow-x: hidden;
+      background: linear-gradient(to top, #a8edea, #fed6e3);
+      transition: all 1s ease;
+    }
+
+    .party-bg {
+      background: url("party.jpg") no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    /* 💫 CENTER */
+    .center {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      z-index: 10;
+      background: rgba(0,0,0,0.08);
+      backdrop-filter: blur(1px);
+    }
+
+    .hidden { display: none; }
+
+    img {
+      width: 180px;
+      border-radius: 50%;
+      box-shadow: 0 0 25px rgba(255,192,203,0.6);
+    }
+
+    button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 20px;
+      background: #ffd1dc;
+      cursor: pointer;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    /* 💖 HEARTS */
+    .heart {
+      position: absolute;
+      color: rgba(255,182,193,0.6);
+      font-size: 18px;
+      animation: floatUpHeart 7s linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes floatUpHeart {
+      0% { transform: translateY(100vh) scale(0.8); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
+
+    /* 🎈 BALLOONS */
+    .balloon {
+      position: absolute;
+      width: 35px;
+      height: 50px;
+      border-radius: 50%;
+      bottom: -60px;
+      animation: floatUp 12s linear infinite;
+      z-index: 1;
+      opacity: 0.85;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translateY(-120vh); opacity: 0; }
+    }
+
+    /* 🎉 BIRTHDAY TITLE */
+    .birthday-text {
+      font-size: 55px;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 0 25px rgba(255,105,180,0.6);
+    }
+
+    /* 💌 LETTER */
+    .letter {
+      font-size: 60px;
+      cursor: pointer;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    /* 💌 MESSAGE (FIXED FONT) */
+    #msg {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      font-weight: 500;
+      color: #fff;
+      max-width: 750px;
+      line-height: 1.7;
+      text-shadow: 0 0 20px rgba(0,0,0,0.6);
+    }
+
+    /* ✨ MAGICAL COUNTDOWN (FIXED BIG) */
+    #countdown {
+      font-size: 180px;
+      font-weight: 900;
+      color: #ffffff;
+      text-shadow:
+        0 0 10px #fff,
+        0 0 30px #ff69b4,
+        0 0 60px #fff;
+
+      animation: magicCount 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes magicCount {
+      from {
+        transform: scale(0.8) rotate(-2deg);
+        opacity: 0.7;
+      }
+      to {
+        transform: scale(1.2) rotate(2deg);
+        opacity: 1;
+      }
+    }
+
+    /* 🎂 CAKE */
+    #cakeScene {
+      background: rgba(0,0,0,0.45);
+    }
+
+    .cake { font-size: 110px; }
+    .candles { font-size: 45px; }
+
+    #wishText {
+      color: white;
+      font-size: 22px;
+      margin-top: 15px;
+    }
+
+    /* 🎁 SURPRISE */
+    #surpriseScene {
+      background: rgba(0,0,0,0.6);
+      color: white;
+      font-size: 28px;
+    }
+
+    /* 📸 MEMORY */
+    #memoryScene {
+      background: rgba(0,0,0,0.75);
+    }
+
+    .photo {
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 20px;
+      margin: 10px;
+      box-shadow: 0 0 20px pink;
+      animation: floatPic 6s infinite ease-in-out;
+    }
+
+    @keyframes floatPic {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0); }
+    }
+
+    #memoryText {
+      font-family: 'Playfair Display', serif;
+      font-size: 38px;
+      color: white;
+      margin-top: 20px;
+      text-shadow: 0 0 20px pink;
+      transition: opacity 0.8s ease;
+    }
+  </style>
+</head>
+
+<body>
+
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mp3">
+</audio>
+
+<!-- 💖 FLOATING MAGIC -->
+<script>
+for(let i=0;i<35;i++){
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(Math.random()*4+4)+"s";
+  document.body.appendChild(h);
+}
+
+const colors=["#ffd1dc","#c1f0f6","#d5c6ff","#ffe4b5","#caffbf"];
+
+for(let i=0;i<10;i++){
+  let b=document.createElement("div");
+  b.className="balloon";
+  b.style.left=Math.random()*100+"vw";
+  b.style.background=colors[Math.floor(Math.random()*colors.length)];
+  b.style.animationDuration=(Math.random()*6+8)+"s";
+  document.body.appendChild(b);
+}
+</script>
+
+<!-- 🔊 START -->
+<div id="startScreen" class="center">
+  <h2>🔊 Turn on your sound</h2>
+  <button onclick="startExperience()">Start 🎉</button>
+</div>
+
+<!-- ⏳ COUNTDOWN -->
+<div id="countdown" class="center hidden">3</div>
+
+<!-- 🎉 MAIN -->
+<div id="scene1" class="center hidden">
+  <div class="birthday-text">🎉 HAPPY BIRTHDAY 🎉</div>
+  <img src="photo.jpg"><br>
+  <div class="letter" onclick="openLetter()">💌</div>
+  <p style="color:white;">Click the letter 💌</p>
+</div>
+
+<!-- 💌 MESSAGE -->
+<div id="messageBox" class="center hidden">
+  <p id="msg"></p>
+  <button onclick="nextStep()">✨ Let’s Make a Wish</button>
+</div>
+
+<!-- 🎂 CAKE -->
+<div id="cakeScene" class="center hidden">
+  <div class="cake">🎂</div>
+  <div class="candles" id="candles">🕯️🕯️🕯️</div>
+  <p id="wishText">Close your eyes... make a wish ✨</p>
+</div>
+
+<!-- 🎁 SURPRISE -->
+<div id="surpriseScene" class="center hidden">
+  <div>🎁 A little surprise is on the way...</div>
+  <button onclick="openMemory()">Click here 💖</button>
+</div>
+
+<!-- 📸 MEMORY -->
+<div id="memoryScene" class="center hidden">
+
+  <div style="display:flex; flex-wrap:wrap; justify-content:center;">
+    <img src="pic1.jpg" class="photo">
+    <img src="pic2.png" class="photo">
+    <img src="pic3.png" class="photo">
+  </div>
+
+  <div id="memoryText">
+    Every memory with you is a little piece of happiness 💖
+  </div>
+
+</div>
+
+<script>
+const music=document.getElementById("music");
+
+/* START */
+function startExperience(){
+  document.getElementById("startScreen").style.display="none";
+  document.getElementById("countdown").classList.remove("hidden");
+
+  let count=3;
+  let cd=document.getElementById("countdown");
+
+  let interval=setInterval(()=>{
+    count--;
+    if(count===0){
+      cd.innerHTML="✨";
+      setTimeout(()=>{
+        cd.style.display="none";
+        document.body.classList.add("party-bg");
+        music.play();
+        document.getElementById("scene1").classList.remove("hidden");
+      },1000);
+      clearInterval(interval);
+    } else {
+      cd.innerHTML=count;
+    }
+  },1000);
+}
+
+/* LETTER */
+function openLetter(){
+  document.getElementById("scene1").classList.add("hidden");
+  document.getElementById("messageBox").classList.remove("hidden");
+
+  const text=`Happy Birthday 💖
+You are truly special to me.
+Wishing you happiness and magic ✨`;
+
+  let i=0;
+  let msg=document.getElementById("msg");
+  msg.innerHTML="";
+
+  function type(){
+    if(i<text.length){
+      msg.innerHTML+=text[i++];
+      setTimeout(type,40);
+    }
+  }
+  type();
+}
+
+/* CAKE */
+function nextStep(){
+  document.getElementById("messageBox").classList.add("hidden");
+  document.getElementById("cakeScene").classList.remove("hidden");
+
+  document.getElementById("cakeScene").onclick=()=>{
+    document.getElementById("candles").innerHTML="";
+    document.getElementById("wishText").innerHTML="Your wish is on its way... 💖🎉";
+
+    setTimeout(()=>{
+      document.getElementById("cakeScene").classList.add("hidden");
+      document.getElementById("surpriseScene").classList.remove("hidden");
+    },2500);
+  };
+}
+
+/* SURPRISE */
+function openMemory(){
+  document.getElementById("surpriseScene").classList.add("hidden");
+  document.getElementById("memoryScene").classList.remove("hidden");
+
+  startMemory();
+}
+
+/* MEMORY */
+function startMemory(){
+  const text=document.getElementById("memoryText");
+
+  const messages=[
+    "Every laugh, every moment… stays forever 💕",
+    "You are my favorite memory ✨",
+    "Again wish u a Happy Birthday 🎂💖"
+  ];
+
+  let i=0;
+
+  function show(){
+    if(i<messages.length){
+      text.style.opacity=0;
+      setTimeout(()=>{
+        text.innerHTML=messages[i++];
+        text.style.opacity=1;
+      },600);
+      setTimeout(show,3500);
+    } else {
+      fadeMusic();
+    }
+  }
+  show();
+}
+
+/* MUSIC */
+function fadeMusic(){
+  let fade=setInterval(()=>{
+    if(music.volume>0.05){
+      music.volume-=0.05;
+    } else {
+      music.pause();
+      clearInterval(fade);
+    }
+  },200);
+}
+</script>
+
+</body>
+</html>
